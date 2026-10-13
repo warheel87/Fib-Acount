@@ -4431,7 +4431,7 @@
                                 رابط تطبيق الويب (Google Apps Script Web App URL):
                             </label>
                             <input type="url" id="googleSheetWebAppUrl" dir="ltr"
-                                placeholder="https://script.google.com/macros/s/AKfycbwOr5GDqhYA6d8v4ethcikiNvtxmQQwQhsnnNrFAfgSkfFI92Dhc3mnpQgThSbsB0kF/exec"
+                                placeholder="https://script.google.com/macros/s/AKfycbzvri4y77oha7WXuyry41l9zlstLmPCYizeW6T2SRXeKJaEUifFhtaEznt2lmYn8cw5/exec"
                                 style="width:100%; padding:10px 14px; border:1.5px solid var(--neutral-200); border-radius:10px; font-size:13px; font-family:monospace; outline:none;">
                             <p style="font-size:11px; color:var(--neutral-500); margin-top:6px; line-height: 1.6;">
                                 💡 انسخ كود v5 المحدّث من «كود التثبيت» وانشره كتطبيق ويب، ثم استخدم رابط النشر نفسه في كل الأجهزة. اختر Anyone لتشغيل الربط؛ أي شخص يحصل على الرابط يمكنه قراءة البيانات وتعديلها، لذلك لا تستخدمه لبيانات حساسة.
@@ -5235,7 +5235,10 @@
                                     Google Sheet جديد (sheets.new)</a>.</li>
                             <li>من القائمة العلوية في الشيت، اختر: <b>الامتدادات (Extensions)</b> ➔ ثم اضغط على <b>Apps
                                     Script</b>.</li>
-                            <li>امسح أي كود موجود هناك، ثم انسخ الكود الموجود بالأسفل والصقه بالكامل في صفحة السكربت.
+                            <li>في الكود أدناه أو في الملف المنفصل <b>GoogleAppsScript_FIBWAR.js</b>، استبدل
+                                <code>PASTE_GOOGLE_SHEET_LINK_HERE</code> برابط جدولك الكامل بين علامتي الاقتباس،
+                                ثم انسخ الكود كله إلى Apps Script. لا تلصق الرابط في خانة رابط تطبيق الويب بالنظام؛
+                                هذا رابط مختلف يظهر بعد النشر.
                             </li>
                             <li>اضغط <b>نشر (Deploy) ➔ إدارة عمليات النشر (Manage deployments) ➔ تعديل</b>، واختر
                                 <b>إصدار جديد (New version)</b>. إذا أنشأت نشراً جديداً بدلاً من تحديث النشر الحالي،
@@ -5269,7 +5272,7 @@
                         style="width: 100%; height: 260px; font-family: monospace; font-size: 11.5px; padding: 12px; border-radius: 10px; border: 1.5px solid var(--neutral-300); background: #1e1e1e; color: #d4d4d4; resize: vertical; line-height: 1.5;"></textarea>
 
                     <p style="font-size: 11px; color: var(--neutral-500); margin-top: 10px;">
-                        💾 تم أيضاً حفظ نسخة من الكود على سطح المكتب باسم: <b>GoogleAppsScript_FIBWAR.js</b>.
+                        💾 يتوفر الكود الكامل أيضاً في ملف مستقل باسم: <b>GoogleAppsScript_FIBWAR.js</b> داخل مجلد النظام.
                     </p>
                 </div>
 
@@ -10403,6 +10406,19 @@
                     }
                     script = script.replace(oldText, newText);
                 }
+                script = script.replace(/^\/\*\*[\s\S]*?\*\/\s*/, '/**\n * FIB WAR STORE - Central Google Sheets Web App v5\n * Paste the Google Sheet URL or ID into GOOGLE_SHEET_URL below.\n */\n');
+                const sheetBinding = 'var GOOGLE_SHEET_URL = "PASTE_GOOGLE_SHEET_LINK_HERE";\n\n' +
+                    'function getCentralSpreadsheet() {\n' +
+                    '  var match = String(GOOGLE_SHEET_URL).match(/\\/spreadsheets\\/d\\/([a-zA-Z0-9_-]+)/);\n' +
+                    '  var spreadsheetId = match ? match[1] : String(GOOGLE_SHEET_URL).trim();\n' +
+                    '  if (!spreadsheetId || spreadsheetId === "PASTE_GOOGLE_SHEET_LINK_HERE") throw new Error("أدخل رابط Google Sheet الصحيح في GOOGLE_SHEET_URL أولاً");\n' +
+                    '  return SpreadsheetApp.openById(spreadsheetId);\n' +
+                    '}\n\n';
+                if (!script.includes('function getCurrentRevision(ss) {')) {
+                    throw new Error('تعذر ربط Google Apps Script بجدول البيانات المحدد.');
+                }
+                script = script.replace('function getCurrentRevision(ss) {', sheetBinding + 'function getCurrentRevision(ss) {');
+                script = script.replaceAll('SpreadsheetApp.getActiveSpreadsheet()', 'getCentralSpreadsheet()');
                 return script;
             }
 
