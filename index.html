@@ -4431,7 +4431,7 @@
                                 رابط تطبيق الويب (Google Apps Script Web App URL):
                             </label>
                             <input type="url" id="googleSheetWebAppUrl" dir="ltr"
-                                placeholder="https://script.google.com/macros/s/AKfycbwJRpcfqKDA5e-U3xLkC2d8YRV0ahuEgw0BQDrgb7F8fZwBg1taCX-OFfw9fUZEbx5_/exec"
+                                placeholder="https://script.google.com/macros/s/AKfycbzvri4y77oha7WXuyry41l9zlstLmPCYizeW6T2SRXeKJaEUifFhtaEznt2lmYn8cw5/exec"
                                 style="width:100%; padding:10px 14px; border:1.5px solid var(--neutral-200); border-radius:10px; font-size:13px; font-family:monospace; outline:none;">
                             <p style="font-size:11px; color:var(--neutral-500); margin-top:6px; line-height: 1.6;">
                                 💡 انسخ كود v5 المحدّث من «كود التثبيت» وانشره كتطبيق ويب، ثم استخدم رابط النشر نفسه في كل الأجهزة. اختر Anyone لتشغيل الربط؛ أي شخص يحصل على الرابط يمكنه قراءة البيانات وتعديلها، لذلك لا تستخدمه لبيانات حساسة.
@@ -10398,6 +10398,18 @@
                     [
                         'system: "FIB WAR STORE Google Sheets Integration v4"',
                         'system: "FIB WAR STORE Google Sheets Integration v5", apiVersion: 5'
+                    ],
+                    [
+                        'function doGet(e) {\n  var params = e && e.parameter ? e.parameter : {};',
+                        'function doGet(e) {\n  var result;\n  try {\n  var params = e && e.parameter ? e.parameter : {};'
+                    ],
+                    [
+                        '  var result;\n  if (action === "ping") {',
+                        '  if (action === "ping") {'
+                    ],
+                    [
+                        '  if (params.callback) return createJsonpResponse(result, params.callback);',
+                        '  } catch (err) {\n    result = { success: false, error: err.toString() };\n  }\n  if (params.callback) return createJsonpResponse(result, params.callback);'
                     ]
                 ];
                 for (const [oldText, newText] of replacements) {
