@@ -10339,7 +10339,7 @@
                         badge.style.background = 'rgba(16,185,129,0.15)';
                         badge.style.color = '#10b981';
                         badge.style.borderColor = 'rgba(16,185,129,0.3)';
-                        statusText.textContent = settings.googleSheetsAutoSync ? 'مربوط ومزامنة فورية 🟢' : 'مربوط 🟢';
+                        statusText.textContent = settings.googleSheetsAutoSync ? 'مربوط ومزامنة تلقائية 🟢' : 'مربوط 🟢';
                     } else {
                         badge.style.background = 'rgba(239,68,68,0.1)';
                         badge.style.color = '#ef4444';
@@ -10449,6 +10449,9 @@
                     return;
                 }
 
+                if (url !== settings.googleSheetWebAppUrl) {
+                    _googleSheetsHasAuthoritativeSnapshot = false;
+                }
                 settings.googleSheetWebAppUrl = url;
                 logGoogleSheetsActivity('جاري اختبار الاتصال بالشيت... ⏳');
                 showToast('⏳ جاري اختبار الاتصال مع Google Sheets...');
@@ -10470,9 +10473,11 @@
             let _googleSheetsApplyingRemote = false;
             let _googleSheetsUploadTimer = null;
             let _googleSheetsUploadActive = false;
+            let _googleSheetsHasAuthoritativeSnapshot = false;
 
             async function pollGoogleSheets() {
-                if (_googleSheetsPollActive || _googleSheetsUploadActive || !settings.googleSheetsAutoSync || !settings.googleSheetWebAppUrl) return;
+                if (_googleSheetsPollActive || _googleSheetsUploadActive || _googleSheetsUploadTimer ||
+                    !settings.googleSheetsAutoSync || !settings.googleSheetWebAppUrl) return;
                 _googleSheetsPollActive = true;
                 try { await restoreFromGoogleSheets(true); }
                 finally { _googleSheetsPollActive = false; }
@@ -10487,9 +10492,11 @@
             }
 
             function scheduleGoogleSheetsUpload() {
-                if (!settings.googleSheetsAutoSync || !settings.googleSheetWebAppUrl || _googleSheetsApplyingRemote) return;
+                if (!settings.googleSheetsAutoSync || !settings.googleSheetWebAppUrl ||
+                    !_googleSheetsHasAuthoritativeSnapshot || _googleSheetsApplyingRemote) return;
                 clearTimeout(_googleSheetsUploadTimer);
                 _googleSheetsUploadTimer = setTimeout(async () => {
+                    _googleSheetsUploadTimer = null;
                     if (_googleSheetsUploadActive || _googleSheetsPollActive) {
                         scheduleGoogleSheetsUpload();
                         return;
@@ -10609,6 +10616,7 @@
                 try {
                     const res = await postToGoogleSheets('sync_all', payload);
                     if (res.unverified) throw new Error(res.message || 'تم الإرسال لكن تعذر التحقق من اكتمال المزامنة.');
+                    _googleSheetsHasAuthoritativeSnapshot = true;
                     settings.googleSheetsLastSync = new Date().toISOString();
                     await saveData(true);
                     updateGoogleSheetsUI();
@@ -10684,13 +10692,15 @@
             async function restoreFromGoogleSheets(silent = false) {
                 const url = (settings.googleSheetWebAppUrl || '').trim();
                 if (!url) {
-                    alert('⚠️ يرجى ضبط رابط Google Apps Script أولاً في الإعدادات!');
-                    switchTab('settings');
-                    switchSettingsSubTab('subtab-google-sheets');
-                    return;
+                    if (!silent) {
+                        alert('⚠️ يرجى ضبط رابط Google Apps Script أولاً في الإعدادات!');
+                        switchTab('settings');
+                        switchSettingsSubTab('subtab-google-sheets');
+                    }
+                    return false;
                 }
 
-                if (!silent && !confirm('⚠️ تحذير: سيتم جلب وإضافة البيانات من Google Sheets إلى النظام الحالي.\n\n• لن يتم حذف البيانات الموجودة - فقط إضافة/تحديث البيانات من الشيت.\n• يُنصح بعمل نسخة احتياطية محلية أولاً.\n\nهل تريد المتابعة؟')) return;
+                if (!silent && !confirm('⚠️ ستصبح بيانات Google Sheets هي البيانات المعتمدة، وسيتم استبدال البيانات المحلية على هذا الجهاز بها.\n\nيُنصح بعمل نسخة احتياطية محلية أولاً.\n\nهل تريد المتابعة؟')) return false;
 
                 if (!silent) logGoogleSheetsActivity('⏳ جاري جلب النسخة الاحتياطية الكاملة من Google Sheets...');
                 if (!silent) showToast('⏳ جاري الاسترداد من Google Sheets...');
@@ -10703,15 +10713,24 @@
 
                     const backupData = res.data;
                     if (!backupData) {
-                        if (silent) { await syncAllToGoogleSheets(true); return; }
                         throw new Error('لم يتم العثور على نسخة احتياطية في الشيت. قم بعمل مزامنة أولاً.');
                     }
+                    if (!Array.isArray(backupData.transactions) ||
+                        !Array.isArray(backupData.adminOperations) ||
+                        !backupData.customers || typeof backupData.customers !== 'object') {
+                        throw new Error('بيانات النسخة الاحتياطية في Google Sheets غير مكتملة؛ لم يتم تغيير البيانات المحلية.');
+                    }
+                    if (_googleSheetsUploadTimer || _googleSheetsUploadActive) return false;
 
                     let importedTx = 0, importedCust = 0, importedAdmin = 0;
+                    transactions = [];
+                    customers = {};
+                    adminOperations = [];
+                    providerBalances = { fib: 0, qi: 0, zain: 0, fastpay: 0 };
+                    cashBalance = 0;
 
                     // --- استرداد العمليات ---
                     if (backupData.transactions && Array.isArray(backupData.transactions)) {
-                        const existingIds = new Set(transactions.map(t => t.id));
                         backupData.transactions.forEach(function (t) {
                             if (t.id) {
                                 // معالجة التاريخ بدقة لضمان توافقه مع الفرز والفلترة
@@ -10755,7 +10774,6 @@
                                     transactions.push(tx);
                                     importedTx++;
                                 }
-                                existingIds.add(t.id);
                             }
                         });
                     }
@@ -10840,23 +10858,28 @@
                     _googleSheetsApplyingRemote = true;
                     try { await saveData(false); } finally { _googleSheetsApplyingRemote = false; } // حفظ شامل وكامل لجميع العمليات والعملاء
                     localStorage.setItem('fib_transactions', JSON.stringify(transactions));
+                    _googleSheetsHasAuthoritativeSnapshot = true;
 
                     if (!silent) logGoogleSheetsActivity('تم الاسترداد بنجاح من Google Sheets ✅');
                     if (!silent) showToast('✅ تم الاسترداد من Google Sheets بنجاح!');
                     if (!silent) alert('✅ تم الاسترداد بنجاح!\n\n' +
-                        '• العمليات المضافة: ' + importedTx + '\n' +
-                        '• العملاء المضافين: ' + importedCust + '\n' +
-                        '• حركات الصندوق المضافة: ' + importedAdmin + '\n\n' +
-                        'تم تحديث جميع البيانات والأرصدة.');
+                        '• العمليات التي تم تحميلها: ' + importedTx + '\n' +
+                        '• العملاء الذين تم تحميلهم: ' + importedCust + '\n' +
+                        '• حركات الصندوق التي تم تحميلها: ' + importedAdmin + '\n\n' +
+                        'تم استبدال البيانات المحلية بنسخة Google Sheets وتحديث الأرصدة.');
 
                     // تحديث الواجهة
                     if (typeof renderTransactions === 'function') renderTransactions();
                     if (typeof renderCustomers === 'function') renderCustomers();
+                    if (typeof renderAdminOperations === 'function') renderAdminOperations();
+                    if (typeof renderDebts === 'function') renderDebts();
                     if (typeof updateDashboard === 'function') updateDashboard();
+                    return true;
 
                 } catch (e) {
                     logGoogleSheetsActivity('فشل الاسترداد: ' + e.message, true);
                     if (!silent) alert('❌ فشل الاسترداد من Google Sheets!\nالخطأ: ' + e.message + '\n\nتأكد من:\n1. أن الشيت يحتوي على ورقة "النسخة الاحتياطية الكاملة"\n2. قمت بعمل مزامنة ناجحة مسبقاً.');
+                    return false;
                 }
             }
 
@@ -12792,11 +12815,15 @@
                     updateCloudMobileLink();
 
                     // حفظ إعدادات ربط Google Sheets
+                    const previousGoogleSheetUrl = settings.googleSheetWebAppUrl;
                     if (document.getElementById('googleSheetWebAppUrl')) {
                         settings.googleSheetWebAppUrl = document.getElementById('googleSheetWebAppUrl').value.trim();
                     }
                     if (document.getElementById('googleSheetsAutoSync')) {
                         settings.googleSheetsAutoSync = document.getElementById('googleSheetsAutoSync').checked;
+                    }
+                    if (settings.googleSheetWebAppUrl !== previousGoogleSheetUrl) {
+                        _googleSheetsHasAuthoritativeSnapshot = false;
                     }
                     if (typeof updateGoogleSheetsUI === 'function') updateGoogleSheetsUI();
 
@@ -13903,7 +13930,13 @@
                 }
 
                 await loadData();
-                checkLoginStatus(); // Call checkLoginStatus after data is loaded
+                if (settings.googleSheetsAutoSync && settings.googleSheetWebAppUrl) {
+                    const cloudDataLoaded = await restoreFromGoogleSheets(true);
+                    if (!cloudDataLoaded) {
+                        showToast('⚠️ تعذر تحميل البيانات من Google Sheets؛ لن يتم رفع البيانات المحلية تلقائياً قبل نجاح الاتصال.', 'danger');
+                    }
+                }
+                await checkLoginStatus(); // Show login only after the cloud-first load completes
                 startGoogleSheetsAutoSync();
 
                 // ============================================================
