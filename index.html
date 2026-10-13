@@ -4386,7 +4386,7 @@
                                     style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--neutral-800); cursor: pointer; background: #fff; padding: 6px 14px; border-radius: 20px; border: 1px solid var(--neutral-200);">
                                     <input type="checkbox" id="googleSheetsAutoSync"
                                         style="width: 18px; height: 18px; cursor: pointer; accent-color: #0f9d58;">
-                                    مزامنة تلقائية بين الأجهزة
+                                    مزامنة مركزية تلقائية بين الأجهزة
                                 </label>
                             </div>
                         </div>
@@ -4410,9 +4410,9 @@
                             </div>
                             <div
                                 style="text-align:center; padding:12px; background:rgba(255,255,255,0.7); border-radius:12px; border:1px solid var(--neutral-200);">
-                                <div style="font-size:22px; font-weight:900; color:#c9a55c;">6 صفحات</div>
-                                <div style="font-size:11px; color:var(--neutral-500); margin-top:2px;">العمليات / الديون
-                                    / العملاء / الصندوق / الأرصدة / النسخة الاحتياطية</div>
+                                <div style="font-size:22px; font-weight:900; color:#c9a55c;">20 ثانية</div>
+                                <div style="font-size:11px; color:var(--neutral-500); margin-top:2px;">الفاصل الأقصى
+                                    لتحديث بقية الأجهزة</div>
                             </div>
                         </div>
                     </div>
@@ -4431,10 +4431,10 @@
                                 رابط تطبيق الويب (Google Apps Script Web App URL):
                             </label>
                             <input type="url" id="googleSheetWebAppUrl" dir="ltr"
-                                placeholder="https://script.google.com/macros/s/AKfycbxE0D3jTiLzSEaNZg7wPgsuvJK9mvm22EmDmQ7J1wMbuXJiozGvzf2jG7HaPuBH3CAv/exec"
+                                placeholder="https://script.google.com/macros/s/AKfycbzvri4y77oha7WXuyry41l9zlstLmPCYizeW6T2SRXeKJaEUifFhtaEznt2lmYn8cw5/exec"
                                 style="width:100%; padding:10px 14px; border:1.5px solid var(--neutral-200); border-radius:10px; font-size:13px; font-family:monospace; outline:none;">
                             <p style="font-size:11px; color:var(--neutral-500); margin-top:6px; line-height: 1.6;">
-                                💡 اختر Anyone لكي يعمل الربط، لكن هذا يجعل البيانات قابلة للقراءة والتعديل لمن يحصل على الرابط. لا تستخدمه لبيانات حساسة.
+                                💡 انسخ كود v5 المحدّث من «كود التثبيت» وانشره كتطبيق ويب، ثم استخدم رابط النشر نفسه في كل الأجهزة. اختر Anyone لتشغيل الربط؛ أي شخص يحصل على الرابط يمكنه قراءة البيانات وتعديلها، لذلك لا تستخدمه لبيانات حساسة.
                             </p>
                         </div>
 
@@ -4446,11 +4446,11 @@
                             </button>
                             <button type="button" onclick="syncAllToGoogleSheets()"
                                 style="padding:10px 20px; background:#0f9d58; color:#fff; border:none; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow: 0 2px 6px rgba(15,157,88,0.3);">
-                                🔄 مزامنة وتصدير جميع البيانات الآن
+                                ⬆️ رفع/استبدال البيانات المركزية
                             </button>
                             <button type="button" onclick="restoreFromGoogleSheets()"
                                 style="padding:10px 20px; background:linear-gradient(135deg,#1a56db,#0a4543); color:#fff; border:none; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(26,86,219,0.35);">
-                                ☁️ استرداد البيانات من الشيت
+                                ⬇️ تحميل البيانات المركزية من الشيت
                             </button>
                             <button type="button" onclick="openGoogleSheetsHelpModal()"
                                 style="padding:10px 18px; background:var(--neutral-100); border:1px solid var(--neutral-300); color:var(--neutral-800); border-radius:10px; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px;">
@@ -5237,16 +5237,21 @@
                                     Script</b>.</li>
                             <li>امسح أي كود موجود هناك، ثم انسخ الكود الموجود بالأسفل والصقه بالكامل في صفحة السكربت.
                             </li>
-                            <li>اضغط على زر <b>نشر (Deploy)</b> بالأعلى ➔ اختر <b>نشر جديد (New deployment)</b> ➔ اضغط
-                                على أيقونة الترس بجانب "Select type" واختر <b>تطبيق ويب (Web app)</b>:
+                            <li>اضغط <b>نشر (Deploy) ➔ إدارة عمليات النشر (Manage deployments) ➔ تعديل</b>، واختر
+                                <b>إصدار جديد (New version)</b>. إذا أنشأت نشراً جديداً بدلاً من تحديث النشر الحالي،
+                                أدخل رابطه الجديد في جميع الأجهزة:
                                 <ul style="list-style: disc; margin: 4px 0 4px 0; padding-right: 20px;">
                                     <li>التنفيذ باسم (Execute as): اختر <b>أنا (Me)</b>.</li>
                                     <li>من يمكنه الوصول (Who has access): اختر <b style="color: #dc2626;">أي شخص
-                                            (Anyone)</b> (ضروري جداً لكي يتمكن البرنامج من الكتابة في الشيت).</li>
+                                            (Anyone)</b> ليعمل الربط، لكن من يحصل على رابط النشر يستطيع قراءة البيانات
+                                        وتعديلها؛ لا تستخدمه لبيانات حساسة.</li>
                                 </ul>
                                 ثم اضغط <b>نشر (Deploy)</b> ووافق على إذن الوصول، وانسخ رابط <b>Web App URL</b> وضعه في
                                 خانة الرابط بالنظام.
                             </li>
+                            <li>ضع رابط النشر نفسه في كل جهاز، فعّل «المزامنة المركزية التلقائية»، ثم حمّل بيانات الشيت
+                                أولاً. التحديثات تنتشر تلقائياً للأجهزة الأخرى خلال نحو 20 ثانية. إذا عدّلت أجهزة متعددة
+                                البيانات في الوقت نفسه، يمنع النظام الكتابة فوق إصدار أحدث ويطلب مراجعة التعديلات.</li>
                         </ol>
                     </div>
 
@@ -5348,7 +5353,9 @@
                                     debtWhatsappTemplate: "",
                                     googleSheetWebAppUrl: "",
                                     googleSheetsAutoSync: false,
-                                    googleSheetsLastSync: ""
+                                    googleSheetsLastSync: "",
+                                    googleSheetsRevision: 0,
+                                    googleSheetsLocalChangesPending: false
                                 }
                             };
                             localStorage.setItem('fib_app_state', JSON.stringify(defaultState));
@@ -6320,7 +6327,9 @@
                 // ============================================================
                 googleSheetWebAppUrl: '',
                 googleSheetsAutoSync: false,
-                googleSheetsLastSync: ''
+                googleSheetsLastSync: '',
+                googleSheetsRevision: 0,
+                googleSheetsLocalChangesPending: false
 
             };
             let autoSaveTimer = null;
@@ -6867,6 +6876,10 @@
             }
 
             async function saveData(onlySettings = false) {
+                if (!onlySettings && settings.googleSheetsAutoSync && settings.googleSheetWebAppUrl &&
+                    !_googleSheetsApplyingRemote) {
+                    settings.googleSheetsLocalChangesPending = true;
+                }
                 const dataToSave = onlySettings ? {
                     settings: {
                         ...settings,
@@ -7919,7 +7932,6 @@
 
                 await window.api.saveTransaction(transaction);
                 await saveData();
-                sendToGoogleSheets('add_transaction', transaction);
 
                 this.reset();
                 setTransactionType('');
@@ -8069,7 +8081,6 @@
                 adminOperations.unshift(newOp);
                 await window.api.saveAdminOperation(newOp);
                 await saveData();
-                sendToGoogleSheets('add_admin_op', newOp);
 
                 // تسجيل عملية صندوق/جهاز إدارية جديدة
                 const logObj = {
@@ -8212,7 +8223,6 @@
                 adminOperations.unshift(newOp);
                 await window.api.saveAdminOperation(newOp);
                 await saveData();
-                sendToGoogleSheets('add_admin_op', newOp);
 
                 // تسجيل عملية صندوق إدارية جديدة
                 const logObj = {
@@ -8492,7 +8502,6 @@
                 await window.api.saveAdminOperation(loanOp);
                 await window.api.saveAdminOperation(newOp);
                 await saveData();
-                sendToGoogleSheets('add_admin_op', newOp);
 
                 closeExternalLoanRepaymentModal();
                 updateDisplay();
@@ -10227,7 +10236,6 @@
                     await window.api.saveTransaction(transaction);
                 }
                 await saveData();
-                sendToGoogleSheets('add_transaction', transaction);
                 settings.cloudReceivedOpsCount = (settings.cloudReceivedOpsCount || 0) + 1;
                 if (document.getElementById('cloudRxCount')) {
                     document.getElementById('cloudRxCount').textContent = settings.cloudReceivedOpsCount;
@@ -10317,6 +10325,87 @@
             // ============================================================
             const GOOGLE_APPS_SCRIPT_CODE = "/**\n * ============================================================\n *   FIB WAR STORE - Google Sheets Sync + Restore Web App v3.0\n *   نظام الربط السحابي الكامل مع استرداد البيانات\n * ============================================================\n *\n * طريقة الاستخدام السريعة:\n * 1. افتح جدول Google Sheet جديد في متصفحك (sheets.new).\n * 2. من القائمة العلوية اختر: الإضافات (Extensions) -> Apps Script.\n * 3. امسح أي كود موجود هناك، والصق هذا الكود كاملاً بدلاً منه.\n * 4. اضغط على زر \"نشر\" (Deploy) بالأعلى -> \"نشر جديد\" (New deployment).\n * 5. اضغط على الترس بجانب \"Select type\" واختر \"تطبيق ويب\" (Web app).\n * 6. اضبط الخيارات:\n *    - الوصف (Description): FIB Sync v3\n *    - التنفيذ باسم (Execute as): أنا (Me)\n *    - من يمكنه الوصول (Who has access): أي شخص (Anyone)  <--- مهم جداً!\n * 7. اضغط Deploy ووافق على الصلاحيات، ثم انسخ رابط Web App URL والصقه في إعدادات النظام.\n */\n\nfunction doPost(e) {\n  try {\n    if (!e || !e.postData || !e.postData.contents) {\n      return createJsonResponse({ success: false, error: \"لا توجد بيانات مستلمة\" });\n    }\n\n    var data = JSON.parse(e.postData.contents);\n    var action = data.action;\n    var payload = data.payload || {};\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n\n    if (action === \"ping\") {\n      return createJsonResponse({\n        success: true,\n        message: \"تم الاتصال بنجاح مع Google Sheets! 🟢\",\n        sheetName: ss.getName(),\n        timestamp: new Date().toISOString()\n      });\n    }\n\n    if (action === \"sync_all\") {\n      var syncLock = LockService.getScriptLock();\n      syncLock.waitLock(30000);\n      try { syncAllData(ss, payload); } finally { syncLock.releaseLock(); }\n      return createJsonResponse({\n        success: true,\n        message: \"تمت مزامنة جميع البيانات بنجاح! 🚀\",\n        timestamp: new Date().toISOString()\n      });\n    }\n\n    if (action === \"add_transaction\") {\n      addTransactionRow(ss, payload);\n      return createJsonResponse({ success: true, message: \"تم تسجيل المعاملة في الشيت بنجاح\" });\n    }\n\n    if (action === \"add_payment\") {\n      addPaymentRow(ss, payload);\n      return createJsonResponse({ success: true, message: \"تم تسجيل دفعة الدين في الشيت بنجاح\" });\n    }\n\n    if (action === \"add_admin_op\") {\n      addAdminOpRow(ss, payload);\n      return createJsonResponse({ success: true, message: \"تم تسجيل حركة الصندوق في الشيت بنجاح\" });\n    }\n\n    // ============================================================\n    // استرداد كامل: يُعيد جميع البيانات من ورقة النسخة الاحتياطية\n    // ============================================================\n    if (action === \"get_backup\") {\n      var result = getBackupData(ss);\n      return createJsonResponse({ success: true, data: result });\n    }\n\n    return createJsonResponse({ success: false, error: \"إجراء غير معروف: \" + action });\n\n  } catch (err) {\n    return createJsonResponse({ success: false, error: err.toString() });\n  }\n}\n\nfunction doGet(e) {\n  var params = e && e.parameter ? e.parameter : {};\n  var action = params.action || \"status\";\n  var result;\n  if (action === \"ping\") {\n    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();\n    result = { success: true, message: \"تم الاتصال بنجاح مع Google Sheets!\", sheetName: spreadsheet.getName(), timestamp: new Date().toISOString() };\n  } else if (action === \"get_backup\") {\n    var backup = getBackupData(SpreadsheetApp.getActiveSpreadsheet());\r\n    result = backup && backup.error ? { success: false, error: backup.error } : { success: true, data: backup, timestamp: new Date().toISOString() };\n  } else {\n    result = { success: true, status: \"active\", system: \"FIB WAR STORE Google Sheets Integration v4\", message: \"خدمة الربط السحابي تعمل بنجاح.\" };\n  }\n  if (params.callback) return createJsonpResponse(result, params.callback);\n  return createJsonResponse(result);\n}\nfunction createJsonpResponse(obj, callback) {\n  if (!/^[A-Za-z_$][0-9A-Za-z_$]*$/.test(callback)) return createJsonResponse({ success: false, error: \"اسم callback غير صالح\" });\n  return ContentService.createTextOutput(callback + \"(\" + JSON.stringify(obj) + \");\").setMimeType(ContentService.MimeType.JAVASCRIPT);\n}\n\nfunction createJsonResponse(obj) {\n  return ContentService.createTextOutput(JSON.stringify(obj))\n    .setMimeType(ContentService.MimeType.JSON);\n}\n\n// دالة مساعدة: إنشاء أو فتح ورقة عمل مع ترويسة\nfunction getOrCreateSheet(ss, name, headers, headerColor) {\n  var sheet = ss.getSheetByName(name);\n  if (!sheet) {\n    sheet = ss.insertSheet(name);\n  }\n  if (sheet.getLastRow() === 0) {\n    sheet.setRightToLeft(true);\n    sheet.appendRow(headers);\n    var range = sheet.getRange(1, 1, 1, headers.length);\n    range.setFontFamily(\"Arial\")\n      .setFontWeight(\"bold\")\n      .setFontSize(11)\n      .setBackground(headerColor || \"#0a4543\")\n      .setFontColor(\"#ffffff\")\n      .setHorizontalAlignment(\"center\")\n      .setVerticalAlignment(\"middle\");\n    sheet.setRowHeight(1, 35);\n    sheet.setFrozenRows(1);\n  }\n  return sheet;\n}\n\n// ============================================================\n// المزامنة الشاملة لجميع السجلات دفعة واحدة\n// ============================================================\nfunction syncAllData(ss, data) {\n  var nowStr = Utilities.formatDate(new Date(), \"GMT+3\", \"yyyy-MM-dd HH:mm:ss\");\n\n  // 1. ورقة العمليات (Transactions)\n  var txHeaders = [\"معرف العملية\", \"التاريخ والوقت\", \"اسم العميل\", \"رقم الهاتف\", \"المزود\", \"نوع العملية\", \"المبلغ الكلي\", \"المبلغ المدفوع\", \"المتبقي (الدين)\", \"طريقة الدفع\", \"العمولة\", \"الموظف المسؤول\", \"الملاحظات\"];\n  var txSheet = ss.getSheetByName(\"العمليات\") || ss.insertSheet(\"العمليات\");\n  txSheet.clear();\n  txSheet.setRightToLeft(true);\n  txSheet.appendRow(txHeaders);\n  txSheet.getRange(1, 1, 1, txHeaders.length).setFontFamily(\"Arial\").setFontWeight(\"bold\").setFontSize(11).setBackground(\"#0a4543\").setFontColor(\"#ffffff\").setHorizontalAlignment(\"center\").setVerticalAlignment(\"middle\");\n  txSheet.setRowHeight(1, 35);\n  txSheet.setFrozenRows(1);\n\n  if (data.transactions && data.transactions.length > 0) {\n    var txRows = data.transactions.map(function(t) {\n      return [\n        t.id || \"\",\n        t.date || \"\",\n        t.customerName || \"\",\n        t.phoneNumber || \"\",\n        (t.provider || \"FIB\").toUpperCase(),\n        t.type === \"buy\" ? \"شراء\" : \"بيع\",\n        Number(t.totalAmount) || 0,\n        Number(t.paidAmount) || 0,\n        Number(t.remainingAmount) || 0,\n        t.paymentMethod === \"cash\" ? \"كاش\" : \"بنك\",\n        Number(t.commission) || 0,\n        t.employeeName || \"\",\n        t.notes || \"\"\n      ];\n    });\n    txSheet.getRange(2, 1, txRows.length, txHeaders.length).setValues(txRows).setHorizontalAlignment(\"center\");\n    txSheet.getRange(2, 7, txRows.length, 3).setNumberFormat(\"#,##0\");\n    txSheet.getRange(2, 11, txRows.length, 1).setNumberFormat(\"#,##0\");\n  }\n\n  // 2. ورقة دفعات وتسديدات الديون\n  var payHeaders = [\"رقم الدفعة\", \"تاريخ التسديد\", \"اسم العميل\", \"الموظف المسؤول\", \"المبلغ المسدد\", \"الدين قبل التسديد\", \"الدين بعد التسديد\", \"طريقة التسديد\", \"الملاحظات\"];\n  var paySheet = ss.getSheetByName(\"دفعات وتسديدات الديون\") || ss.insertSheet(\"دفعات وتسديدات الديون\");\n  paySheet.clear();\n  paySheet.setRightToLeft(true);\n  paySheet.appendRow(payHeaders);\n  paySheet.getRange(1, 1, 1, payHeaders.length).setFontFamily(\"Arial\").setFontWeight(\"bold\").setFontSize(11).setBackground(\"#115e59\").setFontColor(\"#ffffff\").setHorizontalAlignment(\"center\").setVerticalAlignment(\"middle\");\n  paySheet.setRowHeight(1, 35);\n  paySheet.setFrozenRows(1);\n\n  if (data.payments && data.payments.length > 0) {\n    var pRows = data.payments.map(function(p) {\n      return [\n        p.id || \"\",\n        p.date || \"\",\n        p.customerName || \"\",\n        p.employeeName || \"\",\n        Number(p.amount) || 0,\n        Number(p.debtBefore) || 0,\n        Number(p.debtAfter) || 0,\n        p.method === \"cash\" ? \"كاش\" : \"بنك\",\n        p.notes || \"\"\n      ];\n    });\n    paySheet.getRange(2, 1, pRows.length, payHeaders.length).setValues(pRows).setHorizontalAlignment(\"center\");\n    paySheet.getRange(2, 5, pRows.length, 3).setNumberFormat(\"#,##0\");\n  }\n\n  // 3. ورقة العملاء والديون\n  var custHeaders = [\"اسم العميل\", \"رقم الهاتف\", \"عدد العمليات\", \"إجمالي المشتريات\", \"إجمالي المبيعات\", \"إجمالي العمولات\", \"الديون الحالية\", \"تاريخ آخر حركة\"];\n  var custSheet = ss.getSheetByName(\"العملاء والديون\") || ss.insertSheet(\"العملاء والديون\");\n  custSheet.clear();\n  custSheet.setRightToLeft(true);\n  custSheet.appendRow(custHeaders);\n  custSheet.getRange(1, 1, 1, custHeaders.length).setFontFamily(\"Arial\").setFontWeight(\"bold\").setFontSize(11).setBackground(\"#062e2c\").setFontColor(\"#ffffff\").setHorizontalAlignment(\"center\").setVerticalAlignment(\"middle\");\n  custSheet.setRowHeight(1, 35);\n  custSheet.setFrozenRows(1);\n\n  if (data.customers && data.customers.length > 0) {\n    var cRows = data.customers.map(function(c) {\n      return [\n        c.name || \"\",\n        c.phone || \"\",\n        c.transactionsCount || 0,\n        Number(c.totalBuy) || 0,\n        Number(c.totalSell) || 0,\n        Number(c.totalCommission) || 0,\n        Number(c.currentDebt) || 0,\n        c.lastTransaction || \"\"\n      ];\n    });\n    custSheet.getRange(2, 1, cRows.length, custHeaders.length).setValues(cRows).setHorizontalAlignment(\"center\");\n    custSheet.getRange(2, 4, cRows.length, 4).setNumberFormat(\"#,##0\");\n  }\n\n  // 4. ورقة حركات الإدارة والصندوق\n  var admHeaders = [\"معرف الحركة\", \"التاريخ والوقت\", \"الشخص / المستفيد\", \"نوع الحركة\", \"الحساب / المصدر\", \"المبلغ\", \"الملاحظات\"];\n  var admSheet = ss.getSheetByName(\"حركات الإدارة والصندوق\") || ss.insertSheet(\"حركات الإدارة والصندوق\");\n  admSheet.clear();\n  admSheet.setRightToLeft(true);\n  admSheet.appendRow(admHeaders);\n  admSheet.getRange(1, 1, 1, admHeaders.length).setFontFamily(\"Arial\").setFontWeight(\"bold\").setFontSize(11).setBackground(\"#8a6d2b\").setFontColor(\"#ffffff\").setHorizontalAlignment(\"center\").setVerticalAlignment(\"middle\");\n  admSheet.setRowHeight(1, 35);\n  admSheet.setFrozenRows(1);\n\n  if (data.adminOperations && data.adminOperations.length > 0) {\n    var aRows = data.adminOperations.map(function(op) {\n      return [\n        op.id || \"\",\n        op.date || \"\",\n        op.personName || op.customerName || \"\",\n        op.type === \"deposit\" ? \"📥 إيداع\" : (op.type === \"withdraw\" ? \"📤 سحب\" : (op.type || \"\")),\n        (op.account || \"\").toUpperCase(),\n        Number(op.amount) || 0,\n        op.notes || \"\"\n      ];\n    });\n    admSheet.getRange(2, 1, aRows.length, admHeaders.length).setValues(aRows).setHorizontalAlignment(\"center\");\n    admSheet.getRange(2, 6, aRows.length, 1).setNumberFormat(\"#,##0\");\n  }\n\n  // 5. ورقة ملخص الأرصدة والموجودات\n  var sumHeaders = [\"البند / الحساب المالي\", \"الرصيد المتوفر (د.ع)\", \"وقت آخر مزامنة\"];\n  var sumSheet = ss.getSheetByName(\"ملخص الأرصدة والموجودات\") || ss.insertSheet(\"ملخص الأرصدة والموجودات\");\n  sumSheet.clear();\n  sumSheet.setRightToLeft(true);\n  sumSheet.appendRow(sumHeaders);\n  sumSheet.getRange(1, 1, 1, sumHeaders.length).setFontFamily(\"Arial\").setFontWeight(\"bold\").setFontSize(11).setBackground(\"#1f2e2c\").setFontColor(\"#ffffff\").setHorizontalAlignment(\"center\").setVerticalAlignment(\"middle\");\n  sumSheet.setRowHeight(1, 35);\n  sumSheet.setFrozenRows(1);\n\n  var sum = data.summary || {};\n  var sumRows = [\n    [\"رصيد FIB (بنك العراق الأول)\", Number(sum.fib) || 0, nowStr],\n    [\"رصيد Qi Card (ماستر كارد)\", Number(sum.qi) || 0, nowStr],\n    [\"رصيد Zain Cash (زين كاش)\", Number(sum.zain) || 0, nowStr],\n    [\"رصيد FastPay (فاست باي)\", Number(sum.fastpay) || 0, nowStr],\n    [\"رصيد الصندوق النقدي (الكاش)\", Number(sum.cash) || 0, nowStr],\n    [\"إجمالي الموجودات الكلية الحالية\", Number(sum.totalAssets) || 0, nowStr],\n    [\"إجمالي الديون القائمة بذمة العملاء\", Number(sum.totalDebts) || 0, nowStr]\n  ];\n  sumSheet.getRange(2, 1, sumRows.length, sumHeaders.length).setValues(sumRows).setHorizontalAlignment(\"center\");\n  sumSheet.getRange(2, 2, sumRows.length, 1).setNumberFormat(\"#,##0\");\n\n  // 6. ورقة النسخة الاحتياطية الكاملة (JSON مضغوط للاسترداد)\n  saveBackupSheet(ss, data, nowStr);\n}\n\n// ============================================================\n// حفظ نسخة احتياطية JSON كاملة في ورقة منفصلة\n// ============================================================\nfunction saveBackupSheet(ss, data, nowStr) {\n  var backupSheet = ss.getSheetByName(\"النسخة الاحتياطية الكاملة\") || ss.insertSheet(\"النسخة الاحتياطية الكاملة\");\n  backupSheet.clear();\n  backupSheet.setRightToLeft(true);\n\n  var headers = [\"وقت المزامنة\", \"JSON النسخة الاحتياطية الكاملة\"];\n  backupSheet.appendRow(headers);\n  backupSheet.getRange(1, 1, 1, 2).setFontFamily(\"Arial\").setFontWeight(\"bold\").setFontSize(11)\n    .setBackground(\"#1a56db\").setFontColor(\"#ffffff\").setHorizontalAlignment(\"center\");\n  backupSheet.setRowHeight(1, 35);\n  backupSheet.setFrozenRows(1);\n\n  // حفظ البيانات الكاملة كـ JSON - قد يتجاوز حد الخلية (50000 حرف)\n  // نقسمها إلى chunks إذا كانت كبيرة\n  var fullJson = JSON.stringify(data);\n  var chunkSize = 45000;\n  var totalChunks = Math.ceil(fullJson.length / chunkSize);\n\n  for (var i = 0; i < totalChunks; i++) {\n    var chunk = fullJson.substring(i * chunkSize, (i + 1) * chunkSize);\n    backupSheet.appendRow([nowStr + \" [part \" + (i+1) + \"/\" + totalChunks + \"]\", chunk]);\n  }\n\n  backupSheet.getRange(2, 1, totalChunks, 2).setHorizontalAlignment(\"center\");\n  // تعيين عرض العمود الثاني\n  backupSheet.setColumnWidth(2, 600);\n}\n\n// ============================================================\n// استرداد البيانات الكاملة من ورقة النسخة الاحتياطية\n// ============================================================\nfunction getBackupData(ss) {\n  var backupSheet = ss.getSheetByName(\"النسخة الاحتياطية الكاملة\");\n  if (!backupSheet || backupSheet.getLastRow() < 2) {\n    return null;\n  }\n\n  var lastRow = backupSheet.getLastRow();\n  var allChunks = \"\";\n\n  // جمع كل الـ chunks\n  for (var r = 2; r <= lastRow; r++) {\n    var cellVal = backupSheet.getRange(r, 2).getValue();\n    allChunks += (cellVal || \"\").toString();\n  }\n\n  if (!allChunks) return null;\n\n  try {\n    return JSON.parse(allChunks);\n  } catch(e) {\n    return { error: \"فشل في قراءة البيانات: \" + e.toString() };\n  }\n}\n\n// ============================================================\n// إضافة حركات فردية بالوقت الفعلي\n// ============================================================\nfunction addTransactionRow(ss, t) {\n  var headers = [\"معرف العملية\", \"التاريخ والوقت\", \"اسم العميل\", \"رقم الهاتف\", \"المزود\", \"نوع العملية\", \"المبلغ الكلي\", \"المبلغ المدفوع\", \"المتبقي (الدين)\", \"طريقة الدفع\", \"العمولة\", \"الموظف المسؤول\", \"الملاحظات\"];\n  var sheet = getOrCreateSheet(ss, \"العمليات\", headers, \"#0a4543\");\n  sheet.appendRow([\n    t.id || \"\",\n    t.date || \"\",\n    t.customerName || \"\",\n    t.phoneNumber || \"\",\n    (t.provider || \"FIB\").toUpperCase(),\n    t.type === \"buy\" ? \"شراء\" : \"بيع\",\n    Number(t.totalAmount) || 0,\n    Number(t.paidAmount) || 0,\n    Number(t.remainingAmount) || 0,\n    t.paymentMethod === \"cash\" ? \"كاش\" : \"بنك\",\n    Number(t.commission) || 0,\n    t.employeeName || \"\",\n    t.notes || \"\"\n  ]);\n  var lastRow = sheet.getLastRow();\n  sheet.getRange(lastRow, 1, 1, headers.length).setHorizontalAlignment(\"center\");\n  sheet.getRange(lastRow, 7, 1, 3).setNumberFormat(\"#,##0\");\n  sheet.getRange(lastRow, 11, 1, 1).setNumberFormat(\"#,##0\");\n}\n\nfunction addPaymentRow(ss, p) {\n  var headers = [\"رقم الدفعة\", \"تاريخ التسديد\", \"اسم العميل\", \"الموظف المسؤول\", \"المبلغ المسدد\", \"الدين قبل التسديد\", \"الدين بعد التسديد\", \"طريقة التسديد\", \"الملاحظات\"];\n  var sheet = getOrCreateSheet(ss, \"دفعات وتسديدات الديون\", headers, \"#115e59\");\n  sheet.appendRow([\n    p.id || \"\",\n    p.date || \"\",\n    p.customerName || \"\",\n    p.employeeName || \"\",\n    Number(p.amount) || 0,\n    Number(p.debtBefore) || 0,\n    Number(p.debtAfter) || 0,\n    p.method === \"cash\" ? \"كاش\" : \"بنك\",\n    p.notes || \"\"\n  ]);\n  var lastRow = sheet.getLastRow();\n  sheet.getRange(lastRow, 1, 1, headers.length).setHorizontalAlignment(\"center\");\n  sheet.getRange(lastRow, 5, 1, 3).setNumberFormat(\"#,##0\");\n}\n\nfunction addAdminOpRow(ss, op) {\n  var headers = [\"معرف الحركة\", \"التاريخ والوقت\", \"الشخص / المستفيد\", \"نوع الحركة\", \"الحساب / المصدر\", \"المبلغ\", \"الملاحظات\"];\n  var sheet = getOrCreateSheet(ss, \"حركات الإدارة والصندوق\", headers, \"#8a6d2b\");\n  sheet.appendRow([\n    op.id || \"\",\n    op.date || \"\",\n    op.personName || op.customerName || \"\",\n    op.type === \"deposit\" ? \"📥 إيداع\" : (op.type === \"withdraw\" ? \"📤 سحب\" : (op.type || \"\")),\n    (op.account || \"\").toUpperCase(),\n    Number(op.amount) || 0,\n    op.notes || \"\"\n  ]);\n  var lastRow = sheet.getLastRow();\n  sheet.getRange(lastRow, 1, 1, headers.length).setHorizontalAlignment(\"center\");\n  sheet.getRange(lastRow, 6, 1, 1).setNumberFormat(\"#,##0\");\n}\n";
 
+            function buildGoogleAppsScriptCode() {
+                let script = GOOGLE_APPS_SCRIPT_CODE;
+                const replacements = [
+                    ['Google Sheets Sync + Restore Web App v3.0', 'Google Sheets Central Sync Web App v5.0'],
+                    ['FIB Sync v3', 'FIB Central Sync v5'],
+                    [
+                        'function doPost(e) {',
+                        'function getCurrentRevision(ss) {\n' +
+                        '  var properties = PropertiesService.getScriptProperties();\n' +
+                        '  var storedRevision = properties.getProperty("FIB_DATA_REVISION");\n' +
+                        '  if (storedRevision !== null) {\n' +
+                        '    var revision = Number(storedRevision);\n' +
+                        '    if (!isFinite(revision) || revision < 0) throw new Error("رقم إصدار البيانات المركزية غير صالح");\n' +
+                        '    return revision;\n' +
+                        '  }\n' +
+                        '  var backupSheet = ss.getSheetByName("النسخة الاحتياطية الكاملة");\n' +
+                        '  return backupSheet && backupSheet.getLastRow() >= 2 ? 1 : 0;\n' +
+                        '}\n\n' +
+                        'function setCurrentRevision(revision) {\n' +
+                        '  PropertiesService.getScriptProperties().setProperty("FIB_DATA_REVISION", String(revision));\n' +
+                        '}\n\n' +
+                        'function doPost(e) {'
+                    ],
+                    [
+                        '        message: "تم الاتصال بنجاح مع Google Sheets! 🟢",',
+                        '        message: "تم الاتصال بنجاح مع Google Sheets! 🟢",\n' +
+                        '        apiVersion: 5,'
+                    ],
+                    [
+                        '      try { syncAllData(ss, payload); } finally { syncLock.releaseLock(); }',
+                        '      var nextRevision;\n' +
+                        '      try {\n' +
+                        '        var currentRevision = getCurrentRevision(ss);\n' +
+                        '        if (Number(payload.expectedRevision) !== currentRevision) {\n' +
+                        '          return createJsonResponse({ success: false, code: "REVISION_CONFLICT", error: "تغيرت بيانات Google Sheets من جهاز آخر. حدّث البيانات قبل إعادة المحاولة.", revision: currentRevision });\n' +
+                        '        }\n' +
+                        '        var snapshot = Object.assign({}, payload);\n' +
+                        '        delete snapshot.expectedRevision;\n' +
+                        '        syncAllData(ss, snapshot);\n' +
+                        '        nextRevision = currentRevision + 1;\n' +
+                        '        setCurrentRevision(nextRevision);\n' +
+                        '      } finally { syncLock.releaseLock(); }'
+                    ],
+                    [
+                        '        message: "تمت مزامنة جميع البيانات بنجاح! 🚀",',
+                        '        message: "تمت مزامنة جميع البيانات بنجاح! 🚀",\n' +
+                        '        revision: nextRevision,'
+                    ],
+                    [
+                        '      return createJsonResponse({ success: true, data: result });',
+                        '      return createJsonResponse({ success: true, data: result, revision: getCurrentRevision(ss), apiVersion: 5 });'
+                    ],
+                    [
+                        'var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();\n    result = { success: true, message: "تم الاتصال بنجاح مع Google Sheets!", sheetName: spreadsheet.getName(), timestamp: new Date().toISOString() };',
+                        'var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();\n' +
+                        '    result = { success: true, apiVersion: 5, message: "تم الاتصال بنجاح مع Google Sheets!", sheetName: spreadsheet.getName(), timestamp: new Date().toISOString() };'
+                    ],
+                    [
+                        'var backup = getBackupData(SpreadsheetApp.getActiveSpreadsheet());',
+                        'var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();\n' +
+                        '    var backup = getBackupData(spreadsheet);\n' +
+                        '    if (backup && !backup.error) backup._revision = getCurrentRevision(spreadsheet);'
+                    ],
+                    [
+                        'result = backup && backup.error ? { success: false, error: backup.error } : { success: true, data: backup, timestamp: new Date().toISOString() };',
+                        'result = backup && backup.error ? { success: false, error: backup.error } : { success: true, data: backup, revision: getCurrentRevision(spreadsheet), apiVersion: 5, timestamp: new Date().toISOString() };'
+                    ],
+                    [
+                        'system: "FIB WAR STORE Google Sheets Integration v4"',
+                        'system: "FIB WAR STORE Google Sheets Integration v5", apiVersion: 5'
+                    ]
+                ];
+                for (const [oldText, newText] of replacements) {
+                    if (!script.includes(oldText)) {
+                        throw new Error('تعذر تجهيز كود Google Apps Script المركزي: ' + oldText);
+                    }
+                    script = script.replace(oldText, newText);
+                }
+                return script;
+            }
+
             function updateGoogleSheetsUI() {
                 const url = (settings.googleSheetWebAppUrl || '').trim();
                 const badge = document.getElementById('gsStatusBadge');
@@ -10350,7 +10439,7 @@
 
                 const scriptArea = document.getElementById('gsScriptCodeView');
                 if (scriptArea && !scriptArea.value) {
-                    scriptArea.value = GOOGLE_APPS_SCRIPT_CODE;
+                    scriptArea.value = buildGoogleAppsScriptCode();
                 }
             }
 
@@ -10376,7 +10465,7 @@
 
             function openGoogleSheetsHelpModal() {
                 const scriptArea = document.getElementById('gsScriptCodeView');
-                if (scriptArea) scriptArea.value = GOOGLE_APPS_SCRIPT_CODE;
+                if (scriptArea) scriptArea.value = buildGoogleAppsScriptCode();
                 const modal = document.getElementById('googleSheetsHelpModal');
                 if (modal) modal.classList.add('active');
             }
@@ -10388,7 +10477,7 @@
 
             function copyGoogleAppsScriptCode() {
                 const scriptArea = document.getElementById('gsScriptCodeView');
-                const text = scriptArea ? scriptArea.value : GOOGLE_APPS_SCRIPT_CODE;
+                const text = scriptArea ? scriptArea.value : buildGoogleAppsScriptCode();
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(text).then(function () {
                         showToast('✅ تم نسخ كود Google Apps Script بالكامل!');
@@ -10437,7 +10526,12 @@
                 }
                 if (!response.ok) throw new Error('استجابة الخادم: ' + response.status);
                 const result = await response.json();
-                if (!result || result.success !== true) throw new Error(result && result.error ? result.error : 'رفض الخادم الطلب أو أعاد استجابة غير صالحة.');
+                if (!result || result.success !== true) {
+                    const error = new Error(result && result.error ? result.error : 'رفض الخادم الطلب أو أعاد استجابة غير صالحة.');
+                    error.code = result && result.code;
+                    error.revision = result && result.revision;
+                    throw error;
+                }
                 return result;
             }
             async function testGoogleSheetsConnection() {
@@ -10451,6 +10545,10 @@
 
                 if (url !== settings.googleSheetWebAppUrl) {
                     _googleSheetsHasAuthoritativeSnapshot = false;
+                    _googleSheetsRevision = 0;
+                    _googleSheetsApiVerified = false;
+                    settings.googleSheetsRevision = 0;
+                    settings.googleSheetsLocalChangesPending = false;
                 }
                 settings.googleSheetWebAppUrl = url;
                 logGoogleSheetsActivity('جاري اختبار الاتصال بالشيت... ⏳');
@@ -10458,6 +10556,10 @@
 
                 try {
                     const res = await getFromGoogleSheets('ping');
+                    if (Number(res.apiVersion) !== 5) {
+                        throw new Error('إصدار Google Apps Script قديم. انسخ الكود المحدّث من «كود التثبيت» ثم أنشئ نشراً جديداً.');
+                    }
+                    _googleSheetsApiVerified = true;
                     logGoogleSheetsActivity(res.message || 'تم الاتصال بنجاح مع Google Sheets! 🟢');
                     updateGoogleSheetsUI();
                     alert('✅ الاتصال ناجح!\nتم التواصل مع شيت جوجل بنجاح.');
@@ -10474,12 +10576,18 @@
             let _googleSheetsUploadTimer = null;
             let _googleSheetsUploadActive = false;
             let _googleSheetsHasAuthoritativeSnapshot = false;
+            let _googleSheetsRevision = 0;
+            let _googleSheetsApiVerified = false;
+            let _googleSheetsConflictPaused = false;
 
             async function pollGoogleSheets() {
                 if (_googleSheetsPollActive || _googleSheetsUploadActive || _googleSheetsUploadTimer ||
                     !settings.googleSheetsAutoSync || !settings.googleSheetWebAppUrl) return;
                 _googleSheetsPollActive = true;
-                try { await restoreFromGoogleSheets(true); }
+                try {
+                    if (settings.googleSheetsLocalChangesPending) await syncAllToGoogleSheets(true);
+                    else await restoreFromGoogleSheets(true);
+                }
                 finally { _googleSheetsPollActive = false; }
             }
 
@@ -10493,7 +10601,8 @@
 
             function scheduleGoogleSheetsUpload() {
                 if (!settings.googleSheetsAutoSync || !settings.googleSheetWebAppUrl ||
-                    !_googleSheetsHasAuthoritativeSnapshot || _googleSheetsApplyingRemote) return;
+                    !_googleSheetsHasAuthoritativeSnapshot || _googleSheetsApplyingRemote ||
+                    _googleSheetsConflictPaused) return;
                 clearTimeout(_googleSheetsUploadTimer);
                 _googleSheetsUploadTimer = setTimeout(async () => {
                     _googleSheetsUploadTimer = null;
@@ -10515,7 +10624,21 @@
                     return;
                 }
 
-                if (!silent && !confirm('هل تريد مزامنة وتصدير جميع السجلات (' + transactions.length + ' عملية، وبيانات العملاء، ودفعات الديون، والصندوق) إلى Google Sheets الآن؟')) {
+                try {
+                    if (!_googleSheetsApiVerified) {
+                        const status = await getFromGoogleSheets('ping');
+                        if (Number(status.apiVersion) !== 5) {
+                            throw new Error('يلزم تحديث Google Apps Script: افتح «كود التثبيت»، انسخ الكود المحدّث، ثم أنشئ نشراً جديداً قبل المزامنة.');
+                        }
+                        _googleSheetsApiVerified = true;
+                    }
+                } catch (e) {
+                    logGoogleSheetsActivity('تعذر التحقق من إصدار الخدمة المركزية: ' + e.message, true);
+                    if (!silent) alert('❌ لم تبدأ المزامنة حفاظاً على البيانات.\n' + e.message);
+                    return;
+                }
+
+                if (!silent && !confirm('⚠️ سيتم رفع بيانات هذا الجهاز واستبدال النسخة المركزية في Google Sheets.\nإذا كانت هناك بيانات أحدث من جهاز آخر، سيرفضها النظام لحمايتها.\n\nهل تريد المتابعة؟')) {
                     return;
                 }
 
@@ -10610,13 +10733,34 @@
                     settings: {
                         providerBalances: { ...providerBalances },
                         cashBalance: cashBalance
-                    }
+                    },
+                    expectedRevision: _googleSheetsRevision
                 };
 
                 try {
-                    const res = await postToGoogleSheets('sync_all', payload);
-                    if (res.unverified) throw new Error(res.message || 'تم الإرسال لكن تعذر التحقق من اكتمال المزامنة.');
+                    let res = await postToGoogleSheets('sync_all', payload);
+                    if (res.unverified) {
+                        const confirmation = await getFromGoogleSheets('get_backup');
+                        const confirmedData = confirmation && confirmation.data;
+                        const expectedData = { ...payload };
+                        const actualData = confirmedData ? { ...confirmedData } : null;
+                        delete expectedData.expectedRevision;
+                        if (actualData) delete actualData._revision;
+                        if (!confirmation || confirmation.apiVersion !== 5 ||
+                            !Number.isInteger(Number(confirmation.revision)) ||
+                            Number(confirmation.revision) <= _googleSheetsRevision ||
+                            JSON.stringify(actualData) !== JSON.stringify(expectedData)) {
+                            throw new Error(res.message || 'تعذر التحقق من اكتمال المزامنة المركزية.');
+                        }
+                        res = { revision: confirmation.revision };
+                    }
+                    if (!Number.isInteger(Number(res.revision)) || Number(res.revision) <= _googleSheetsRevision) {
+                        throw new Error('لم تُرجع الخدمة إصدار المزامنة المتوقع. تحقق من نشر Google Apps Script v5.');
+                    }
+                    _googleSheetsRevision = Number(res.revision);
                     _googleSheetsHasAuthoritativeSnapshot = true;
+                    settings.googleSheetsRevision = _googleSheetsRevision;
+                    settings.googleSheetsLocalChangesPending = false;
                     settings.googleSheetsLastSync = new Date().toISOString();
                     await saveData(true);
                     updateGoogleSheetsUI();
@@ -10625,64 +10769,15 @@
                     if (!silent) alert('✅ تمت المزامنة بنجاح!\nتم رفع وتحديث:\n- ' + transData.length + ' عملية\n- ' + paymentsList.length + ' دفعة دين\n- ' + customersData.length + ' عميل\n- ' + adminData.length + ' حركة إدارة وصندوق\n- ملخص الأرصدة\n- ✅ نسخة احتياطية كاملة للاسترداد');
                 } catch (e) {
                     logGoogleSheetsActivity('فشل التصدير والمزامنة: ' + e.message, true);
-                    if (!silent) alert('❌ فشلت عملية المزامنة!\nالخطأ: ' + e.message);
-                }
-            }
-
-            async function sendToGoogleSheets(action, item) {
-                if (!settings.googleSheetsAutoSync || !settings.googleSheetWebAppUrl) return;
-
-                try {
-                    let payload = {};
-                    if (action === 'add_transaction') {
-                        payload = {
-                            id: item.id || '',
-                            date: formatDateTime(item.date),
-                            customerName: item.customerName || '',
-                            phoneNumber: item.phoneNumber || '-',
-                            provider: (item.provider || 'FIB').toUpperCase(),
-                            type: item.type,
-                            totalAmount: item.totalAmount || 0,
-                            paidAmount: item.paidAmount || 0,
-                            remainingAmount: item.remainingAmount || 0,
-                            paymentMethod: item.paymentMethod,
-                            commission: item.commission || 0,
-                            employeeName: item.employeeName || '-',
-                            notes: item.notes || ''
-                        };
-                    } else if (action === 'add_payment') {
-                        payload = {
-                            id: item.id || '',
-                            date: formatDateTime(item.date),
-                            customerName: item.customerName || '',
-                            employeeName: item.employeeName || '-',
-                            amount: item.amount || 0,
-                            debtBefore: item.debtBefore !== undefined ? item.debtBefore : (item.totalAmountOfAffected || 0),
-                            debtAfter: item.debtAfter !== undefined ? item.debtAfter : (item.remainingAmountOfAffected || 0),
-                            method: item.method || 'cash',
-                            notes: item.notes || ''
-                        };
-                    } else if (action === 'add_admin_op') {
-                        payload = {
-                            id: item.id || '',
-                            date: formatDateTime(item.date),
-                            personName: item.personName || item.customerName || '-',
-                            type: item.type,
-                            account: item.account || '-',
-                            amount: item.amount || 0,
-                            notes: item.notes || ''
-                        };
+                    if (e.code === 'REVISION_CONFLICT') {
+                        _googleSheetsHasAuthoritativeSnapshot = false;
+                        _googleSheetsConflictPaused = true;
+                        settings.googleSheetsAutoSync = false;
+                        await saveData(true);
+                        startGoogleSheetsAutoSync();
+                        showToast('⚠️ توجد بيانات أحدث من جهاز آخر. أوقفنا الرفع التلقائي لمنع استبدالها؛ حمّل بيانات الشيت ثم راجع تعديلات هذا الجهاز.', 'danger');
                     }
-
-                    postToGoogleSheets(action, payload).then(function (res) {
-                        if (res.unverified) { logGoogleSheetsActivity('أُرسل التحديث لكن تعذر التحقق من تأكيد الخادم.', true); return; }
-                        const actionLabel = action === 'add_transaction' ? 'معاملة جديدة' : (action === 'add_payment' ? 'تسديد دين' : 'حركة صندوق');
-                        logGoogleSheetsActivity('تمت المزامنة الفورية لـ (' + actionLabel + ') بنجاح 🟢');
-                    }).catch(function (err) {
-                        console.warn('Google Sheets background sync error:', err);
-                    });
-                } catch (err) {
-                    console.warn('Google Sheets auto sync trigger error:', err);
+                    if (!silent) alert('❌ فشلت عملية المزامنة!\nالخطأ: ' + e.message);
                 }
             }
 
@@ -10711,15 +10806,25 @@
                         throw new Error(res ? (res.error || 'فشل غير معروف') : 'لا توجد استجابة من الشيت');
                     }
 
+                    if (res.apiVersion !== 5 || !Number.isInteger(Number(res.revision))) {
+                        throw new Error('Google Apps Script قديم أو غير مكتمل. حدّثه بالكود المركزي v5 من «كود التثبيت» ثم أنشئ نشراً جديداً.');
+                    }
+                    _googleSheetsApiVerified = true;
                     const backupData = res.data;
                     if (!backupData) {
                         throw new Error('لم يتم العثور على نسخة احتياطية في الشيت. قم بعمل مزامنة أولاً.');
+                    }
+                    if (!Number.isInteger(Number(backupData._revision)) ||
+                        Number(backupData._revision) !== Number(res.revision)) {
+                        throw new Error('إصدار نسخة البيانات في الشيت غير متطابق؛ لم يتم تغيير البيانات المحلية.');
                     }
                     if (!Array.isArray(backupData.transactions) ||
                         !Array.isArray(backupData.adminOperations) ||
                         !backupData.customers || typeof backupData.customers !== 'object') {
                         throw new Error('بيانات النسخة الاحتياطية في Google Sheets غير مكتملة؛ لم يتم تغيير البيانات المحلية.');
                     }
+                    if (_googleSheetsHasAuthoritativeSnapshot &&
+                        Number(backupData._revision) === _googleSheetsRevision) return true;
                     if (_googleSheetsUploadTimer || _googleSheetsUploadActive) return false;
 
                     let importedTx = 0, importedCust = 0, importedAdmin = 0;
@@ -10858,7 +10963,11 @@
                     _googleSheetsApplyingRemote = true;
                     try { await saveData(false); } finally { _googleSheetsApplyingRemote = false; } // حفظ شامل وكامل لجميع العمليات والعملاء
                     localStorage.setItem('fib_transactions', JSON.stringify(transactions));
+                    _googleSheetsRevision = Number(backupData._revision);
+                    settings.googleSheetsRevision = _googleSheetsRevision;
+                    settings.googleSheetsLocalChangesPending = false;
                     _googleSheetsHasAuthoritativeSnapshot = true;
+                    _googleSheetsConflictPaused = false;
 
                     if (!silent) logGoogleSheetsActivity('تم الاسترداد بنجاح من Google Sheets ✅');
                     if (!silent) showToast('✅ تم الاسترداد من Google Sheets بنجاح!');
@@ -11589,7 +11698,6 @@
 
                 await window.api.saveDebtPayment(paymentRecord);
                 await saveData();
-                sendToGoogleSheets('add_payment', { ...paymentRecord, customerName });
 
                 updateDisplay();
                 await renderTransactions();
@@ -12824,6 +12932,11 @@
                     }
                     if (settings.googleSheetWebAppUrl !== previousGoogleSheetUrl) {
                         _googleSheetsHasAuthoritativeSnapshot = false;
+                        _googleSheetsRevision = 0;
+                        _googleSheetsApiVerified = false;
+                        _googleSheetsConflictPaused = false;
+                        settings.googleSheetsRevision = 0;
+                        settings.googleSheetsLocalChangesPending = false;
                     }
                     if (typeof updateGoogleSheetsUI === 'function') updateGoogleSheetsUI();
 
@@ -13931,9 +14044,14 @@
 
                 await loadData();
                 if (settings.googleSheetsAutoSync && settings.googleSheetWebAppUrl) {
-                    const cloudDataLoaded = await restoreFromGoogleSheets(true);
-                    if (!cloudDataLoaded) {
-                        showToast('⚠️ تعذر تحميل البيانات من Google Sheets؛ لن يتم رفع البيانات المحلية تلقائياً قبل نجاح الاتصال.', 'danger');
+                    if (settings.googleSheetsLocalChangesPending) {
+                        _googleSheetsRevision = Number(settings.googleSheetsRevision) || 0;
+                        _googleSheetsHasAuthoritativeSnapshot = true;
+                    } else {
+                        const cloudDataLoaded = await restoreFromGoogleSheets(true);
+                        if (!cloudDataLoaded) {
+                            showToast('⚠️ تعذر تحميل البيانات من Google Sheets؛ لن يتم رفع البيانات المحلية تلقائياً قبل نجاح الاتصال.', 'danger');
+                        }
                     }
                 }
                 await checkLoginStatus(); // Show login only after the cloud-first load completes
